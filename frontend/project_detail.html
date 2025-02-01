@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <h2 class="text-center">{{ project.name }}</h2>
+        <p class="text-muted text-center">{{ project.description }}</p>
+
+        {% if project.icon %}
+        <div class="text-center">
+            <img src="{{ project.icon.url }}" alt="{{ project.name }}" class="img-fluid rounded shadow-lg" width="200">
+        </div>
+        {% endif %}
+
+        <hr>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Company</h4>
+                <p><strong>Name:</strong> {{ project.company.name }}</p>
+                <p><strong>Address:</strong> {{ project.company.address }}</p>
+                <p><strong>Phone:</strong> {{ project.company.phone }}</p>
+                <p><strong>Email:</strong> <a href="mailto:{{ project.company.email }}">{{ project.company.email }}</a></p>
+                <p><strong>Website:</strong> <a href="{{ project.company.website }}" target="_blank">{{ project.company.website }}</a></p>
+            </div>
+
+            <div class="col-md-6">
+                <h4>Technologies & Frameworks</h4>
+                <ul>
+                    {% for tech in technologies %}
+                    <li>{{ tech.name }} (Version: {{ tech.version }})</li>
+                    {% endfor %}
+                </ul>
+                <ul>
+                    {% for framework in frameworks %}
+                    <li>{{ framework.name }} (Version: {{ framework.version }})</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <hr>
+
+        <h4>Functional Requirements</h4>
+        <ul>
+            {% for feature in features %}
+            <li><strong>{{ feature.feature_name }}</strong> - {{ feature.feature_description }}</li>
+            {% endfor %}
+        </ul>
+
+        <h4>Non-Functional Requirements</h4>
+        <p>{{ project.nonfunctional_requirements.first.general_specifications }}</p>
+
+        <h4>Architecture</h4>
+        {% if architecture %}
+            <ul>
+                <li>Flow Diagram: <a href="{{ architecture.flow_diagram.url }}" target="_blank">View</a></li>
+                <li>System Architecture: <a href="{{ architecture.system_architecture.url }}" target="_blank">View</a></li>
+                <li>DFD: <a href="{{ architecture.dfd.url }}" target="_blank">View</a></li>
+                <li>Class Diagram: <a href="{{ architecture.class_diagram.url }}" target="_blank">View</a></li>
+                <li>Wireframes: <a href="{{ architecture.wireframes.url }}" target="_blank">View</a></li>
+                <li>UI Design: <a href="{{ architecture.ui_design.url }}" target="_blank">View</a></li>
+            </ul>
+        {% else %}
+            <p>No architecture details available.</p>
+        {% endif %}
+
+        <h4>Security</h4>
+        <p><strong>Security Standards:</strong> {{ security.security_standards }}</p>
+        <p><strong>Application Security:</strong> {{ security.application_security }}</p>
+        <p><strong>Database Security:</strong> {{ security.database_security }}</p>
+        <p><strong>Roles:</strong> {{ security.role }}</p>
+        <p><strong>Auditing:</strong> {{ security.auditing }}</p>
+
+        <h4>Documents</h4>
+        {% if documents %}
+            <ul>
+                <li>Installation Manual: <a href="{{ documents.installation_manual.url }}" target="_blank">Download</a></li>
+                <li>User Manual: <a href="{{ documents.user_manual.url }}" target="_blank">Download</a></li>
+                <li>Instructional Guide: <a href="{{ documents.instructional_guide.url }}" target="_blank">Download</a></li>
+                <li>Tutorial: <a href="{{ documents.tutorial.url }}" target="_blank">Download</a></li>
+                <li>Troubleshooting Guide: <a href="{{ documents.troubleshooting_guide.url }}" target="_blank">Download</a></li>
+                <li>API Documentation: <a href="{{ documents.api_documentation.url }}" target="_blank">Download</a></li>
+                <li>UX Documentation: <a href="{{ documents.ux_documentation.url }}" target="_blank">Download</a></li>
+                <li>Testing Report: <a href="{{ documents.testing_report.url }}" target="_blank">Download</a></li>
+            </ul>
+        {% else %}
+            <p>No documents available.</p>
+        {% endif %}
+
+        <h4>Hardware Requirements</h4>
+        {% if hardware_requirements %}
+            <ul>
+                <li><strong>Hardware Name:</strong> {{ hardware_requirements.hardware_name }}</li>
+                <li><strong>Brand:</strong> {{ hardware_requirements.brand }}</li>
+                <li><strong>Specification:</strong> {{ hardware_requirements.hardware_specification }}</li>
+                <li><strong>Min CPU:</strong> {{ hardware_requirements.min_cpu }}</li>
+                <li><strong>Min GPU:</strong> {{ hardware_requirements.min_gpu }}</li>
+                <li><strong>Min RAM:</strong> {{ hardware_requirements.min_ram }} GB</li>
+                <li><strong>Min Storage:</strong> {{ hardware_requirements.min_storage }} GB</li>
+                <li><strong>Min OS:</strong> {{ hardware_requirements.min_os }}</li>
+                <li><strong>Recommended CPU:</strong> {{ hardware_requirements.rec_cpu }}</li>
+                <li><strong>Recommended GPU:</strong> {{ hardware_requirements.rec_gpu }}</li>
+                <li><strong>Recommended RAM:</strong> {{ hardware_requirements.rec_ram }} GB</li>
+                <li><strong>Recommended Storage:</strong> {{ hardware_requirements.rec_storage }} GB</li>
+                <li><strong>Recommended OS:</strong> {{ hardware_requirements.rec_os }}</li>
+            </ul>
+        {% else %}
+            <p>No hardware requirements specified.</p>
+        {% endif %}
+
+        <h4>Source Code</h4>
+        {% for code in source_code %}
+            <p><strong>Version Name:</strong> {{ code.version_name }}</p>
+            <p><strong>Description:</strong> {{ code.description }}</p>
+            <a href="{{ code.source_code.url }}" target="_blank" class="btn btn-primary btn-sm">Download Source Code</a>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

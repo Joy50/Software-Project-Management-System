@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    {% load static %}
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="{% static 'images/favicon/favicon.ico' %}" type="image/x-icon">
+    <style>
+        body {
+            background-color: #f4f8fb;
+        }
+        .card {
+            border-radius: 10px;
+        }
+        .card-header {
+            background-color: #ff6f61;
+            color: white;
+            border-radius: 10px 10px 0 0;
+        }
+        .btn-custom {
+            background-color: #ff6f61;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #ff3b2a;
+        }
+        .alert-info {
+            background-color: #e0f7fa;
+            color: #00695c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6">
+                <div class="card shadow-lg">
+                    <div class="card-header text-center">
+                        <h3>Create Account</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-custom btn-block">Sign Up</button>
+                        </form>
+                        {% if messages %}
+                            <div class="mt-3">
+                                {% for message in messages %}
+                                    <div class="alert alert-info">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="mt-3 text-center">
+                            <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

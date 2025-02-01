@@ -1,0 +1,165 @@
+{% extends 'base.html' %} 
+{% block content %}
+<div class="container mt-5">
+  <h2>Create Project</h2>
+
+  {% if messages %}
+  <div class="alert alert-success">
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if project_form.errors %}
+  <div class="alert alert-danger">
+    <p>{{ project_form.errors }}</p>
+  </div>
+  {% endif %}
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <!-- Project Form -->
+    <div class="mb-3">
+      {{ project_form.as_p }}
+    </div>
+
+    <!-- Non-Functional Requirements Form -->
+    <div class="mb-3">
+      <label for="nonfunctional_requirements" class="form-label"><h3>Non-Functional Requirements</h3></label>
+      {{ nonfunctional_requirement_form.as_p }}
+    </div>
+
+    <!-- Functional Requirements Form -->
+    <div class="mb-3">
+      <label for="functional_requirements" class="form-label"><h3>Functional Requirements</h3></label>
+      {{ functionalrequirement_form.as_p }}
+    </div>
+
+    <!-- Architecture Form -->
+    <div class="mb-3">
+      <label for="architecture" class="form-label"><h3>Architecture</h3></label>
+      {{ architecture_form.as_p }}
+    </div>
+
+    <!-- Security Form -->
+    <div class="mb-3">
+      <label for="security" class="form-label"><h3>Security</h3></label>
+      {{ security_form.as_p }}
+    </div>
+
+    <!-- Source Code Form -->
+    <div class="mb-3">
+      <label for="source_code" class="form-label"><h3>Source Code</h3></label>
+      {{ source_code_form.as_p }}
+    </div>
+
+    <!-- Features Formset -->
+    <div class="mb-3">
+      <h3>Features</h3>
+      <div id="feature-formset">
+        {% for form in feature_formset %}
+        <div class="mb-2 feature-form">
+          {{ form.as_p }}
+          {% if form.DELETE %}
+          <div class="form-check">{{ form.DELETE }} Delete this feature</div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+      <button type="button" class="btn btn-secondary" style="float: right;" id="add-feature">
+        Add Feature
+      </button>
+    </div>
+
+    <!-- Documents Formset -->
+    <div class="mb-3">
+      <h3>Documents</h3>
+      <div id="document-formset">
+        {% for form in document_formset %}
+        <div class="mb-2 document-form">
+          {{ form.as_p }}
+          {% if form.DELETE %}
+          <div class="form-check">{{ form.DELETE }} Delete this document</div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+      <button type="button" class="btn btn-secondary" id="add-document" style="float: right;">
+        Add Document
+      </button>
+    </div>
+
+    <!-- Hardware Requirements Formset -->
+    <div class="mb-3">
+      <h3>Hardware Requirements</h3>
+      <div id="hardware-formset">
+        {% for form in hardware_requirement_formset %}
+        <div class="mb-2 hardware-form">
+          {{ form.as_p }}
+          {% if form.DELETE %}
+          <div class="form-check">
+            {{ form.DELETE }} Delete this hardware requirement
+          </div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+      <button type="button" class="btn btn-secondary" id="add-hardware" style="float: right;">
+        Add Hardware
+      </button>
+    </div>
+
+    <br><br>
+    <button type="submit" class="btn btn-primary form-control">Submit</button>
+  </form>
+</div>
+
+<script>
+  $(document).ready(function () {
+    // Initialize TinyMCE for textareas
+    tinymce.init({
+      selector: "textarea", // Apply TinyMCE to all textareas
+      height: 300,
+      menubar: false,
+      plugins: "advlist autolink lists link image charmap print preview anchor",
+      toolbar:
+        "undo redo | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | link image",
+      setup: function (editor) {
+        editor.on('init', function () {
+          // Ensure that the original textarea is visible
+          var textarea = editor.getElement();
+          textarea.style.display = 'block';
+        });
+      }
+    });
+
+    // Add Form functionality
+    function addForm(formsetId) {
+      var formIdx = $("#" + formsetId + " .feature-form").length;
+      var newForm = $("#" + formsetId + " .feature-form:first").clone();
+      newForm.find("input, select, textarea").each(function () {
+        var name = $(this)
+          .attr("name")
+          .replace("-0-", "-" + formIdx + "-");
+        $(this).attr("name", name);
+        $(this).val("");
+      });
+      $("#" + formsetId).append(newForm);
+      tinymce.init({
+        selector: "textarea",
+        height: 300,
+        menubar: false,
+        plugins: "advlist autolink lists link image charmap print preview anchor",
+        toolbar: "undo redo | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | link image",
+      });
+    }
+
+    // Event Listeners
+    $("#add-feature").click(function () { addForm("feature-formset"); });
+    $("#add-document").click(function () { addForm("document-formset"); });
+    $("#add-hardware").click(function () { addForm("hardware-formset"); });
+  });
+</script>
+{% endblock %}

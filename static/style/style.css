@@ -1,0 +1,60 @@
+* {
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+    margin: 0; /* Reset default margins */
+    padding: 0; /* Reset default padding */
+}
+
+body {
+    background-image: url('../images/bg.jpg');
+    background-size: cover; /* or contain, depending on desired effect */
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Optional: Makes the background image fixed while scrolling */
+    font-family: sans-serif; /* Add a default font family for better readability */
+    color: #333; /* Set a default text color */
+    line-height: 1.6; /* Improve line spacing for readability */
+}
+
+.login-box{
+    width: 350px;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    margin-right: 10px;
+}
+
+/* Example of how to style specific elements */
+h1, h2, h3 {
+    font-weight: bold;
+    margin-bottom: 1rem; /* Consistent spacing below headings */
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+a {
+    color: #007bff; /* Example link color */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Example of adding some padding to a container */
+.container {
+    max-width: 960px; /* Set a maximum width for larger screens */
+    margin: 20px auto; /* Center the container */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background for content readability */
+    border-radius: 8px; /* Add rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+/* If the background image is dark, adjust text color */
+body.dark-bg {
+    color: #eee;
+}
+
+body.dark-bg a {
+    color: #add8e6; /* Light blue */
+}
